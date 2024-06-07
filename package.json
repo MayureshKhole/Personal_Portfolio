@@ -18,6 +18,8 @@
     "emailjs": "^4.0.2",
     "firebase": "^10.10.0",
     "gh-pages": "^3.2.3",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "react": "^18.0.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.0.0",

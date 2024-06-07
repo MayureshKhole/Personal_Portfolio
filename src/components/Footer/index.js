@@ -99,7 +99,8 @@ function Footer() {
         </Nav>
         <SocialMediaIcons>
           <SocialMediaIcon href={Bio.facebook} target="display"><FacebookIcon /></SocialMediaIcon>
-          <SocialMediaIcon href={Bio.twitter} target="display"><GitHubIcon/></SocialMediaIcon>
+        {/* the icon was intechanged so i have fixed it and hardcoded it such that it directs on the proper page */}
+          <SocialMediaIcon href={Bio.github} target="display"><GitHubIcon/></SocialMediaIcon> 
           <SocialMediaIcon href={Bio.linkedin} target="display"><LinkedInIcon /></SocialMediaIcon>
           <SocialMediaIcon href={Bio.insta} target="display"><InstagramIcon /></SocialMediaIcon>
         </SocialMediaIcons>

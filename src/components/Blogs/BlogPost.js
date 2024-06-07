@@ -1,7 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-import Imgh from './img.jpeg'
+import jsPDF from "jspdf"; // added this library for manipulation
+import html2canvas from "html2canvas";
+import Imgh from './img.jpeg';
 
 const theme = {
   text_primary: "#333",
@@ -14,7 +16,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background:"#FFC470";
+  background: "#FFC470";
 `;
 
 const Header = styled.header`
@@ -32,7 +34,7 @@ const Header = styled.header`
 const Footer = styled.footer`
   width: 100%;
   padding: 1rem;
-  background:#FFC470;
+  background: #FFC470;
   text-align: center;
   margin-top: auto;
 `;
@@ -81,6 +83,21 @@ const PostImg = styled.img`
   height: auto;
   padding: 2rem 0;
   border-radius: 8px;
+`;
+
+const DownloadButton = styled.button`
+  background-color: ${(props) => props.theme.accent};
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.accent};
+  }
 `;
 
 const blogPosts = [
@@ -152,12 +169,24 @@ const BlogPost = () => {
     return <div>Post not found</div>;
   }
 
+  const handleDownload = async () => {
+    const input = document.getElementById("post-wrapper");
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF();
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`${post.title}.pdf`);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
         <Header>My Blog</Header>
         <PostContainer>
-          <PostWrapper>
+          <PostWrapper id="post-wrapper">
             <PostImg src={post.img} alt={post.title} />
             <PostTitle>{post.title}</PostTitle>
             <PostMeta>
@@ -165,6 +194,7 @@ const BlogPost = () => {
               <div>{post.date}</div>
             </PostMeta>
             <PostContent dangerouslySetInnerHTML={{ __html: post.content }} />
+        <DownloadButton onClick={handleDownload}>Download as PDF</DownloadButton>
           </PostWrapper>
         </PostContainer>
         <Footer>© 2024 My Blog. All rights reserved.</Footer>

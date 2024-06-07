@@ -1,0 +1,29 @@
+.button-outline-primary {
+    border-color: #FFC470;
+    background-color: #FFC470;
+    color: #020202;
+    border-radius: 20%;
+     /* Adding padding of 0.8rem (top/bottom) and 1.2rem (left/right) */
+    width: 9rem;
+    height: 2.5rem;
+}
+
+.button-outline-primary:hover {
+    background-color: #ff9500;
+    color: #0e0d0d;
+    border-color: #FFC470;
+}
+
+.button-outline-success {
+    background-color: #FFC470;
+    color: #030303;
+    padding: 0.8rem 1.2rem; /* Adding padding of 0.8rem (top/bottom) and 1.2rem (left/right) */
+    width: 9rem;
+    height: 2.5rem;
+    border-radius: 20%;
+}
+
+.button-outline-success:hover {
+    background-color: #ff9500;
+    color: #0e0d0d;
+}

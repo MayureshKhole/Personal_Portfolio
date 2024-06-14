@@ -1,231 +1,193 @@
-import styled from "styled-components";
-import _default from "../../themes/default";
+import styled, { keyframes } from "styled-components";
 
-export const HeroContainer = styled.div`
+// Animations
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateZ(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+`;
+
+const float = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const rotate = keyframes`
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+`;
+
+// Styled Components
+export const HeroContainer = styled.section`
   display: flex;
+  align-items: center;
   justify-content: center;
   position: relative;
-  padding: 80px 30px;
-  @media (max-width: 960px) {
-    padding: 66px 16px;
-  }
-  @media (max-width: 640) {
-    padding: 32px 16px;
-  }
-  z-index: 1;
-
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  animation: ${fadeIn} 1s ease-out;
+  perspective: 1000px;
+  overflow: hidden;
 `;
 
 export const HeroBg = styled.div`
   position: absolute;
-  display: flex;
-  justify-content: end;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  max-width: 1360px;
   overflow: hidden;
-  padding: 0 30px;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-
-  @media (max-width: 960px) {
-    justify-content: center;
-    padding: 0 0px;
-  }
+  z-index: -1;
+  background: url('https://api.unsplash.com/search/photos?page=1&query=technology') center/cover no-repeat;
+  transform: translateZ(-200px) scale(1.5); /* 3D depth effect */
 `;
 
 export const HeroInnerContainer = styled.div`
-  position: relative;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
   width: 100%;
-  max-width: 1100px;
-
-  @media (max-width: 960px) {
-    flex-direction: column;
-  }
+  transform: rotateY(-10deg); /* Adding 3D transform */
 `;
-export const HeroLeftContainer = styled.div`
-  width: 100%;
-  order: 1;
-  @media (max-width: 960px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
-  @media (max-width: 640px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+export const HeroLeftContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  transform: translateZ(50px); /* 3D depth effect */
+  animation: ${float} 6s ease-in-out infinite;
 `;
 
 export const HeroRightContainer = styled.div`
-  width: 120%;
+  flex: 1;
   display: flex;
-  order: 2;
-  justify-content: end;
-  gap: 12px;
-  @media (max-width: 960px) {
-    order: 1;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 80px;
-  }
-
-  @media (max-width: 640px) {
-    margin-bottom: 30px;
-  }
+  justify-content: center;
+  align-items: center;
+  transform: translateZ(50px); /* 3D depth effect */
 `;
 
 export const Img = styled.img`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 500px;
-  max-height: 1000px;
-  padding-left:3rem;
-  border-radius: 1%;
-  // border: 2px solid ${({ theme }) => theme.primary};
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  transform: translateZ(100px) rotateY(0); /* 3D depth effect */
+  animation: ${rotate} 20s infinite linear;
 
-  /* Add transition for smooth animation */
-  transition: transform 0.3s ease;
-
-  /* Add hover effect */
   &:hover {
-    transform: scale(1.05); /* Scale the image slightly on hover */
-  }
-
-  @media (max-width: 768px) {
-    max-width: 400px;
-    max-height: 400px;
-  }
-
-  @media (max-width: 640px) {
-    max-width: 280px;
-    max-height: 280px;
-  }
-`;
-
-
-export const Title = styled.div`
-  font-weight: 700;
-  font-size: 50px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-
-  @media (max-width: 640px) {
-    font-size: 40px;
-    line-height: 48px;
-    margin-bottom: 8px;
+    transform: scale(1.05) translateZ(100px);
   }
 `;
 
 export const TextLoop = styled.div`
-  font-weight: 600;
-  font-size: 32px;
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 1rem 0;
   display: flex;
-  gap: 12px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-  @media (max-width: 640px) {
-    font-size: 22px;
-    line-height: 48px;
-    margin-bottom: 16px;
-  }
+  align-items: center;
+`;
+
+export const Title = styled.h1`
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transform: translateZ(50px); /* 3D depth effect */
 `;
 
 export const Span = styled.span`
-  color: ${({ theme }) => theme.primary};
-  cursor: pointer;
+  font-weight: bold;
+  color: #ff6347;
+  margin-left: 0.5rem;
 `;
 
-
-export const SubTitle = styled.div`
-  font-size: 20px;
-  line-height: 32px;
-  margin-bottom: 42px;
-  color: ${({ theme }) => theme.text_primary + 95};
-  text-align: justify; /* Add this line for text alignment */
-
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-
-  @media (max-width: 640px) {
-    display:none;
-  }  
-    
-  @media (max-width: 640px) {
-   &::before {
-      content: "I am a passionate MERN (MongoDB, Express.js, React.js, Node.js) stack developer";
-      font-size: 16px;
-      line-height: 32px;
-      color: ${({ theme }) => theme.text_primary + 95}; /* Text color */
-      text-align: center; /* Center alignment for mobile */
-      display: block;
-      z-index:-100;
-  }
+export const SubTitle = styled.p`
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  line-height: 1.6;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  transform: translateZ(50px); /* 3D depth effect */
 `;
 
 export const HContainer = styled.div`
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  align-items: center; // Ensure items are aligned vertically in the center
-  justify-content: center; // Center the buttons horizontally
-
-  @media (max-width: 640px) {
-  padding-top:2rem;
-    flex-direction: column; // Stack buttons vertically
-    gap: 2rem; // Adjust gap between buttons
-  }
-
+  flex-wrap: wrap;
+  justify-content: start;
+  margin-top: 2rem;
+  transform: translateZ(50px); /* 3D depth effect */
 `;
 
-export const ResumeButton = styled.a`
-  display: inline-block;
-  border: 2px solid black;
-  background-color: white;
-  color: black;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out, background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+export const SocialMediaIcons = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+`;
+
+export const SocialMediaIcon = styled.a`
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+  transition: color 0.3s;
 
   &:hover {
-    transform: scale(1.05);
-    color: "#AD88C6";
-    background-color: #ED9455;
-   
-    font-size: 18px;
-    font-weight: 600;
-  }
-
-  @media (max-width: 640px) {
-    padding: 12px 0;
-    font-size: 18px;
+    color: #ff6347; /* Example hover color */
   }
 `;
 
+export const CustomButton = styled.a`
+  display: inline-block;
+  padding: 0.8rem 1.2rem;
+  margin: 0.5rem 1rem 0.5rem 0;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+
+  &.primary {
+    background-color: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+
+    &:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  }
+
+  &.secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: 2px solid #6c757d;
+
+    &:hover {
+      background-color: #5a6268;
+      border-color: #5a6268;
+    }
+  }
+`;

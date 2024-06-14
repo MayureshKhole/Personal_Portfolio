@@ -1,8 +1,4 @@
 import React from "react";
-import styled from "styled-components";
-import Imgh from "./img.jpeg"
-
-import HeroBgAnimation from "../HeroBgAnimation";
 import {
   HeroContainer,
   HeroBg,
@@ -15,40 +11,20 @@ import {
   Span,
   SubTitle,
   HContainer,
+  SocialMediaIcons,
+  SocialMediaIcon,
+  CustomButton
 } from "./HeroStyle";
 import Typewriter from "typewriter-effect";
 import { Bio } from "../../data/constants";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import Button from "react-bootstrap/Button";
-import "bootstrap/dist/css/bootstrap.min.css";
 import GitHub from "@mui/icons-material/GitHub";
-import "./index.css";
-import { ImagesearchRollerOutlined } from "@mui/icons-material";
+import HeroBgAnimation from "../HeroBgAnimation";
+import Imgh from "./img.jpeg";
 
 const HeroSection = () => {
-  const SocialMediaIcons = styled.div`
-    display: flex;
-
-    align-items: center; // Ensure items are aligned vertically in the center
-    justify-content: center; // Center the buttons horizontally
-  `;
-
-  const SocialMediaIcon = styled.a`
-    display: inline-block;
-    margin: 0 1rem;
-
-    align-items: center; // Ensure items are aligned vertically in the center
-    justify-content: center; // Center the buttons horizontally
-    font-size: 1.5rem;
-    color: ${({ theme }) => theme.text_primary};
-    transition: color 0.2s ease-in-out;
-    &:hover {
-      color: ${({ theme }) => theme.primary};
-    }
-  `;
-
   function scrollToContact() {
     const contactSection = document.getElementById("contact");
     if (contactSection) {
@@ -81,43 +57,30 @@ const HeroSection = () => {
             </TextLoop>
             <SubTitle>{Bio.description}</SubTitle>
             <SocialMediaIcons>
-              <SocialMediaIcon href={Bio.facebook} target="display">
+              <SocialMediaIcon href={Bio.facebook} target="_blank">
                 <FacebookIcon />
               </SocialMediaIcon>
-              <SocialMediaIcon href={Bio.linkedin} target="display">
+              <SocialMediaIcon href={Bio.linkedin} target="_blank">
                 <LinkedInIcon />
               </SocialMediaIcon>
-              <SocialMediaIcon href={Bio.github} target="display">
+              <SocialMediaIcon href={Bio.github} target="_blank">
                 <GitHub />
               </SocialMediaIcon>
-              <SocialMediaIcon href={Bio.insta} target="display">
+              <SocialMediaIcon href={Bio.insta} target="_blank">
                 <InstagramIcon />
               </SocialMediaIcon>
             </SocialMediaIcons>
             <HContainer>
-              <Button
+              <CustomButton
                 href={Bio.resume}
-                target="display"
-                className="button-outline-primary"
-                style={{
-                  backgroundColor:"#FFC470",}}
+                target="_blank"
+                className="primary"
               >
                 View Resume
-              </Button>
-              <a href="#contact">
-                <button
-                  type="button"
-                  className="button-outline-success"
-                  style={{
-                    backgroundColor:"#FFC470",
-                    padding: "2px",
-                    border: "1px solid white",
-                    outline: "1px solid white",
-                  }}
-                >
-                  Hire Me
-                </button>
-              </a>
+              </CustomButton>
+              <CustomButton as="button" onClick={scrollToContact} className="secondary">
+                Hire Me
+              </CustomButton>
             </HContainer>
           </HeroLeftContainer>
 

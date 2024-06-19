@@ -1,0 +1,72 @@
+/* index.css */
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background: #0f2027;
+    color: #fff;
+    perspective: 1000px; /* Add perspective to the body */
+  }
+  
+  /* Scrollbar styling */
+  body::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: #2c5364;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: #0f2027;
+    border-radius: 10px;
+    border: 3px solid #2c5364;
+  }
+  
+  /* Button styles */
+  .button-outline-primary,
+  .button-outline-success {
+    display: inline-block;
+    padding: 0.8rem 1.2rem;
+    margin: 0.5rem 1rem 0.5rem 0;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  
+  .button-outline-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+  }
+  
+  .button-outline-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .button-outline-success {
+    background-color: #6c757d;
+    color: #fff;
+    border: 2px solid #6c757d;
+  }
+  
+  .button-outline-success:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+  }
+  
+  /* Add some hover effects to social icons */
+  .SocialMediaIcon:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  

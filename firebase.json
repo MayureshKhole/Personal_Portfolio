@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "site":"mayuresh-khole-profile",
+    "public": "build",
+    "rewrites":[{
+      "source":"**",
+      "destination":"/index.html"
+    }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

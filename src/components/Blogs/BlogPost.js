@@ -3,20 +3,19 @@ import { useParams } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa"; // Import social media icons
 import image from "./image.png";
 import image1 from "./image1.jpg";
 import image2 from "./image2.jpg";
 import image3 from "./image3.jpeg";
 import image4 from "./image4.png";
 import image5 from "./image5.jpg";
-// added images  for firebase  website
-
 
 
 const theme = {
   text_primary: "#333",
   text_secondary: "#666",
-  background: "#f9f9f9",
+  background: "#F4F4F4",
   accent: "#007BFF",
 };
 
@@ -24,32 +23,48 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: "#FFC470";
+  background: ${theme.background};
 `;
 
 const Header = styled.header`
   width: 100%;
-  padding: 1rem;
   z-index: 100;
   position: fixed;
   top: 0;
-  background-color: #FFC470;
-  text-align: center;
-  font-size: 24px;
+  height: 4rem;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Center items vertically */
+  box-sizing: border-box;
+  padding: 0 11rem; /* Adjust the padding as needed */
+  @media (max-width: 786px) {
+    padding: 0;
+  }
+`;
+
+const HeaderLeft = styled.div`
+  font-size: 2rem;
   font-weight: bold;
+`;
+
+const HeaderRight = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  @media (max-width: 786px) {
+    display: none;
+  }
 `;
 
 const Footer = styled.footer`
   width: 100%;
   padding: 1rem;
-  background: #FFC470;
   text-align: center;
   margin-top: auto;
 `;
 
 const PostContainer = styled.div`
   width: 100%;
-  padding: 2rem 0;
   display: flex;
   justify-content: center;
 `;
@@ -62,14 +77,12 @@ const PostWrapper = styled.section`
   gap: 20px;
   align-items: center;
   padding: 2rem;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
 `;
 
 const PostTitle = styled.h1`
   font-size: 32px;
-  color: ${(props) => props.theme.text_primary};
+  font-weight: bold; // or 700
+  color: black; // or #000
   text-align: center;
 `;
 
@@ -78,6 +91,13 @@ const PostMeta = styled.div`
   color: ${(props) => props.theme.text_secondary};
   margin-bottom: 1rem;
   text-align: center;
+  display: flex;
+  gap: 0.8rem;
+
+  & > div:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.8rem;
+  }
 `;
 
 const PostContent = styled.div`
@@ -87,10 +107,12 @@ const PostContent = styled.div`
 `;
 
 const PostImg = styled.img`
-  width: 23rem;
-  height: auto;
-  padding: 2rem 0;
-  border-radius: 8px;
+  border-radius: 2px;
+  border-color: #ffffff;
+  width: 150%;
+  @media (max-width: 786px) {
+    width: 20rem;
+  }
 `;
 
 const DownloadButton = styled.button`
@@ -107,6 +129,33 @@ const DownloadButton = styled.button`
     background-color: ${(props) => props.theme.accent};
   }
 `;
+
+const Sidebar = styled.div`
+  position: fixed;
+  top: 15rem; /* below the header */
+  left: 0;
+  width: 3rem;
+  height: 100%;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5rem;
+  @media (max-width: 786px) {
+    padding-left: 10px;
+    width: 1rem;
+  }
+`;
+
+const SocialIcon = styled.a`
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  color: ${(props) => props.theme.text_primary};
+  &:hover {
+    color: #ffc470;
+  }
+`;
+
 const blogPosts = [
   {
     id: 1,
@@ -128,7 +177,7 @@ const blogPosts = [
   },
   {
     id: 3,
-    img: image3,
+    img:image3,
     title: "From Non-Tech to Tech: How I Became a MERN Stack Developer",
     content: "<h2><strong>Introduction</strong></h2><p>Hello, I'm Mayuresh Khole, and this is my journey from a non-technical background to becoming a proficient MERN stack developer.</p><p>My journey began with a spark of curiosity about technology, despite never having pursued it professionally. Starting from scratch was daunting, yet it was the beginning of an enlightening path. By setting clear, achievable goals, such as understanding the basics of web development and finding the right resources, I gradually built my foundation.</p><p>Resources like FreeCodeCamp, MDN Web Docs, and various YouTube channels provided the knowledge, while hands-on practice through building projects helped solidify my skills. Engaging with a community of fellow learners and diving deeper into technologies like MongoDB, Express.js, React.js, and Node.js (MERN stack) broadened my expertise and prepared me for professional challenges.</p><h2><strong>Conclusion</strong></h2><p>My transition into the tech industry culminated in securing a job as a MERN stack developer, marking a significant milestone in my career. This journey, filled with continuous learning and real-world application, has been incredibly rewarding.</p>",
     author: "Mayuresh Khole",
@@ -146,7 +195,7 @@ const blogPosts = [
   },
   {
     id: 5,
-    img: image,
+    img: image5,
     title: "Tailwind CSS vs. Bootstrap: Which CSS Framework is Right for You?",
     content:
       "<h2>Introduction:</h2><p>CSS frameworks simplify the process of building responsive and aesthetically pleasing websites. Tailwind CSS and Bootstrap are two of the most popular frameworks available. This blog compares Tailwind CSS and Bootstrap to help you decide which framework is best for your project.</p><h2>Content:</h2><p>Tailwind CSS and Bootstrap have different philosophies and feature sets. Understanding these differences can guide you in making the right choice.</p><p>Why Consider Tailwind CSS?</p><ul><li><strong>Utility-First Approach:</strong> Tailwind CSS uses a utility-first approach, providing low-level utility classes that can be composed to build custom designs without writing custom CSS.</li><li><strong>Customization:</strong> Tailwind CSS is highly customizable, allowing developers to create unique designs that match their brand's identity.</li><li><strong>Performance:</strong> Tailwind CSS generates minimal CSS, reducing file size and improving load times.</li><li><strong>Responsive Design:</strong> Tailwind CSS makes it easy to create responsive designs with its intuitive class naming convention.</li></ul><p>Why Consider Bootstrap?</p><ul><li><strong>Component-Based:</strong> Bootstrap offers a component-based approach with pre-designed components, making it easy to build responsive websites quickly.</li><li><strong>Consistency:</strong> Bootstrap ensures a consistent look and feel across all browsers and devices, reducing cross-browser compatibility issues.</li><li><strong>Documentation:</strong> Bootstrap has comprehensive documentation, providing clear guidelines and examples for developers.</li><li><strong>Community Support:</strong> Bootstrap has a large community and a vast number of third-party themes and plugins available.</li></ul><p>How to Choose the Right CSS Framework?</p><ul><li><strong>Project Requirements:</strong> Consider the specific needs of your project. If you need a highly customizable and lightweight framework, Tailwind CSS might be the better choice. For quick development with pre-designed components, Bootstrap could be more suitable.</li><li><strong>Design Flexibility:</strong> Evaluate the design flexibility required for your project. Tailwind CSS offers more flexibility for custom designs, while Bootstrap provides a consistent design out-of-the-box.</li><li><strong>Learning Curve:</strong> Consider the learning curve of each framework. Tailwind CSS's utility-first approach may require some adjustment, while Bootstrap's component-based approach is straightforward and beginner-friendly.</li><li><strong>Community and Support:</strong> Both frameworks have strong communities, but Bootstrap's larger user base might offer more resources and third-party integrations.</li></ul><p>Remember, the choice between Tailwind CSS and Bootstrap depends on your project's unique requirements and goals.</p><h2>Conclusion</h2><p>In conclusion, both Tailwind CSS and Bootstrap offer powerful features that cater to different needs. By carefully evaluating your project requirements and the strengths of each framework, you can choose the right one for your application. Whether you prioritize customization, quick development, or design consistency, understanding these factors will guide you to the best decision.</p><h2>What's New</h2><p><strong>Tailwind CSS 3.0 Release:</strong> The latest release of Tailwind CSS introduces Just-in-Time mode, improved performance, and new utilities.</p><p><strong>Bootstrap 5 Updates:</strong> Bootstrap 5 removes jQuery dependency, introduces new components, and offers enhanced customization options.</p><p><strong>Modern CSS Frameworks:</strong> An overview of modern CSS frameworks, including Tailwind CSS, Bootstrap, Bulma, and Foundation, comparing their features and use cases.</p><h2>",
@@ -155,7 +204,7 @@ const blogPosts = [
   },
   {
     id: 6,
-    img:image5,
+    img: image,
     title: "Mastering CSS Grid and Flexbox for Responsive Web Design",
     content:
       "<h2>Introduction:</h2><p>Creating responsive web designs is essential in today's multi-device world. CSS Grid and Flexbox are powerful layout systems that enable developers to build flexible and adaptive layouts. Understanding and mastering these tools is key to modern web development.</p><h2>Content:</h2><p>CSS Grid and Flexbox serve different purposes and can be used together to create complex, responsive layouts.</p><p>Using CSS Grid:</p><ul><li><strong>Definition:</strong> CSS Grid is a two-dimensional layout system that allows for the creation of complex grid-based designs.</li><li><strong>Example:</strong> <code>display: grid;</code> is used to define a grid container, and <code>grid-template-columns</code> and <code>grid-template-rows</code> specify the columns and rows.</li><li><strong>Benefits:</strong> CSS Grid is ideal for creating complex layouts with precise control over rows and columns.</li></ul><p>Using Flexbox:</p><ul><li><strong>Definition:</strong> Flexbox is a one-dimensional layout system used to distribute space along a single axis, either horizontally or vertically.</li><li><strong>Example:</strong> <code>display: flex;</code> is used to define a flex container, and <code>justify-content</code> and <code>align-items</code> manage the alignment and distribution of flex items.</li><li><strong>Benefits:</strong> Flexbox is perfect for creating simple layouts and aligning items within a container.</li></ul><p>Combining CSS Grid and Flexbox:</p><ul><li><strong>Complementary Use:</strong> Use CSS Grid for the overall layout structure and Flexbox for aligning items within grid cells.</li><li><strong>Example:</strong> A layout with a CSS Grid for the main structure and Flexbox for item alignment within individual grid areas.</li><li><strong>Benefits:</strong> Combining both systems provides greater flexibility and control over complex designs.</li></ul><p>Responsive Design with Grid and Flexbox:</p><ul><li><strong>Media Queries:</strong> Use media queries to adjust grid and flexbox properties for different screen sizes.</li><li><strong>Auto Layout:</strong> CSS Grid's auto-fill and auto-fit properties help create responsive layouts without specifying exact sizes.</li><li><strong>Flexibility:</strong> Flexbox's ability to grow and shrink items ensures elements adjust to varying screen sizes seamlessly.</li></ul><p>Remember, mastering both CSS Grid and Flexbox is essential for creating modern, responsive web designs that work across all devices.</p><h2>Conclusion</h2><p>In conclusion, understanding and mastering CSS Grid and Flexbox is crucial for building responsive and adaptable web designs. By leveraging the strengths of both layout systems, developers can create complex, flexible, and visually appealing layouts that enhance user experience.</p><h2>What's New</h2><p><strong>CSS Grid Level 2:</strong> The latest specification introduces subgrid, allowing for more nested and complex layouts.</p><p><strong>Flexbox Best Practices:</strong> A comprehensive guide on best practices for using Flexbox in modern web development.</p><p><strong>Responsive Design Techniques:</strong> An in-depth look at advanced techniques for creating responsive designs with CSS Grid and Flexbox.</p><h2>",
@@ -163,8 +212,6 @@ const blogPosts = [
     date: "June 13, 2024",
   },
 ];
-// add more posts here
-
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -219,20 +266,41 @@ const BlogPost = () => {
     downloadButton.style.display = 'block';
   };
 
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Header>My Blog</Header>
+        <Header>
+          <HeaderLeft>Mayuresh Khole</HeaderLeft>
+          <HeaderRight>Blogs</HeaderRight>
+        </Header>
+        <Sidebar>
+          <SocialIcon href="https://twitter.com" target="_blank">
+            <FaTwitter />
+          </SocialIcon>
+          <SocialIcon
+            href="https://www.linkedin.com/in/mayuresh-khole/"
+            target="_blank"
+          >
+            <FaLinkedin />
+          </SocialIcon>
+          <SocialIcon href="https://github.com/MayureshKhole" target="_blank">
+            <FaGithub />
+          </SocialIcon>
+        </Sidebar>
         <PostContainer>
           <PostWrapper id="post-wrapper">
-            <PostImg src={post.img} alt={post.title} />
             <PostTitle>{post.title}</PostTitle>
             <PostMeta>
               <div>By {post.author}</div>
               <div>{post.date}</div>
+              
             </PostMeta>
+            <PostImg src={post.img} alt={post.title} />
             <PostContent dangerouslySetInnerHTML={{ __html: post.content }} />
-            <DownloadButton id="download-button" onClick={handleDownload}>Download as PDF</DownloadButton>
+            <DownloadButton id="download-button" onClick={handleDownload}>
+              Download as PDF
+            </DownloadButton>
           </PostWrapper>
         </PostContainer>
         <Footer>© 2024 My Blog. All rights reserved.</Footer>

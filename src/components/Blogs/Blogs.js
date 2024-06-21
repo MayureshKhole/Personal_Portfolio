@@ -8,6 +8,7 @@ import image3 from "./image3.jpeg";
 import image4 from "./image4.png";
 import image5 from "./image5.jpg";
 
+
 const BlogContainer = styled.div`
   width: 100%;
   padding: 4rem 0;
@@ -103,7 +104,7 @@ function Blogs() {
     },
     {
       id: 3,
-      img: image3,
+      img:image3,
       title: "My Journey from Non-tech to Tech",
       summary:
         "This journey, filled with continuous learning and real-world application, has been incredibly rewarding.",
@@ -117,14 +118,14 @@ function Blogs() {
     },
     {
       id: 5,
-      img: image,
+      img: image5,
       title: "Tailwind CSS vs. Bootstrap: Which CSS Framework is Right for You?",
       summary:
         "A detailed comparison of Tailwind CSS and Bootstrap to help you decide which CSS framework best suits your project.",
     },
     {
       id: 6,
-      img: image5,
+      img: image,
       title: "Mastering CSS Grid and Flexbox for Responsive Web Design",
       summary:
         "Understanding and mastering CSS Grid and Flexbox to create flexible and responsive web designs.",
